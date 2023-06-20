@@ -1,0 +1,16 @@
+starships:
+  '1701': 
+    name: Enterprise
+    Captain: Kirk
+  '1701-D':
+    name: Enterprise
+    Captain: Picard
+  '1864': 
+    name: Reliant
+    Captain: Terrell
+  '75656': 
+    name: Voyager
+    Captain: Janeway
+  '1031': 
+    name: Discovery
+    Captain: Lorca
