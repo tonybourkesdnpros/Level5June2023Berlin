@@ -1,0 +1,11 @@
+---
+- name: Configure interface
+  hosts: leaf1-DC1
+  tasks:
+  - name: Configure interface
+    arista.eos.eos_interfaces:
+      config:
+      - name: Ethernet3
+        enabled: true
+        mode: layer3
+      state: merged

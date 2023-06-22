@@ -1,0 +1,13 @@
+---
+- name: Add VLAN Playbook
+  hosts: Leafs_DC1, Leafs_DC2
+  vars:
+    # vlan_list: [10, 20, 30, 40,51,11,525,2060,2325,2314,55,556,551]
+  tasks:
+    - name: Add VLANs from loop
+      arista.eos.eos_vlans:
+        config:
+          - vlan_id: "20-30"
+            name: DMZ
+            state: active
+        state: merged

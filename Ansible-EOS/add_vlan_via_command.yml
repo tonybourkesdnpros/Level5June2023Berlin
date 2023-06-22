@@ -1,0 +1,9 @@
+---
+- name: Add VLAN Playbook (arbitrary)
+  hosts: Leafs_DC1, Leafs_DC2
+  tasks:
+    - name: Add VLANs from arbitrary EOS syntax
+      arista.eos.eos_command:
+        commands:
+          - "configure"
+          - "no vlan 10-1000"

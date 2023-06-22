@@ -1,0 +1,12 @@
+---
+- name: Upload configlets to CVP
+  hosts: cvp1
+  vars:
+    configlet_list:
+      MLAG_Left: "{{ lookup('file', '../configs/static/MLAG_left.txt') }}"
+      MLAG_Right: "{{ lookup('file', '../configs/static/MLAG_right.txt') }}"
+  tasks:
+  - name: "Create configlets on CVP"
+    arista.cvp.cv_configlet_v3:
+      configlets: "{{ configlet_list }}"
+      configlets_notes: "Configlet managed by Ansible"
