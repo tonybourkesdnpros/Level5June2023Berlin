@@ -1,18 +1,4 @@
 all:
-  vars:
-    ansible_user: arista
-# Use this section if you want to perform testing via the eAPI
-    ansible_password: aristac0tp
-    ansible_connection: httpapi
-    ansible_httpapi_use_ssl: True
-    ansible_httpapi_validate_certs: False
-    ansible_network_os: eos
-    ansible_httpapi_port: 443
-# Use this section if you want to perform testing via the CLI through SSH
-    # ansible_connection: network_cli
-    # ansible_network_os: eos
-    # ansible_become: yes
-    # ansible_become_method: enable
   children:
     CVP_cluster:
       hosts:
@@ -26,36 +12,76 @@ all:
           ansible_httpapi_validate_certs: False
           ansible_network_os: eos
           ansible_httpapi_port: 443
-    DC1:
-      children: 
-        Spines_DC1:
-          hosts:
-            spine[1:3]-DC1:
-        Leafs_DC1:
-          children:
-            Left_Leafs_DC1:
+    FABRIC:
+      vars:
+        ansible_user: arista
+    # Use this section if you want to perform testing via the eAPI
+        ansible_password: aristac0tp
+        ansible_connection: httpapi
+        ansible_httpapi_use_ssl: True
+        ansible_httpapi_validate_certs: False
+        ansible_network_os: eos
+        ansible_httpapi_port: 443
+    # Use this section if you want to perform testing via the CLI through SSH
+        # ansible_connection: network_cli
+        # ansible_network_os: eos
+        # ansible_become: yes
+        # ansible_become_method: enable
+      children:
+        DC1:
+          children: 
+            Spines_DC1:
+              vars: 
+                type: spine
               hosts:
-                leaf[1:4:2]-DC1:
-                borderleaf1-DC1:
-            Right_Leafs_DC1:
-              hosts:
-                leaf[2:4:2]-DC1:
-                borderleaf2-DC1:
-    DC2:
-      children: 
-        Spines_DC2:
-          hosts:
-            spine[1:3]-DC2:
-        Leafs_DC2:
-          children:
-            Left_Leafs_DC2:
-              hosts:
-                leaf[1:4:2]-DC2:
-                borderleaf1-DC2:
-            Right_Leafs_DC2:
-              hosts:
-                leaf[2:4:2]-DC2:
-                borderleaf2-DC2:
-    DCI_Connect:
-      hosts:
-        DCI:all:
+                spine1-DC1:
+                spine2-DC1:
+                spine3-DC1:
+            Leafs_DC1:
+              vars:
+                type: l3leaf
+              children:
+                Left_Leafs_DC1:
+                  hosts:
+                    leaf1-DC1:
+                    leaf3-DC1:
+                    borderleaf1-DC1:
+                Right_Leafs_DC1:
+                  hosts:
+                    leaf2-DC1:
+                    leaf4-DC1:
+                    borderleaf2-DC1:
+        # DC2:
+        #   children: 
+        #     Spines_DC2:
+        #       vars:
+        #         type: spine
+        #       hosts:
+        #         spine1-DC2:
+        #         spine2-DC2:
+        #         spine3-DC2:
+        #     Leafs_DC2:
+        #       vars:
+        #         type: l3leaf
+        #       children:
+        #         Left_Leafs_DC2:
+        #           hosts:
+        #             leaf1-DC2:
+        #             leaf3-DC2:
+        #             borderleaf1-DC2:
+        #         Right_Leafs_DC2:
+        #           hosts:
+        #             leaf2-DC2:
+        #             leaf4-DC2:
+        #             borderleaf2-DC2:
+        # DCI_Connect:
+        #   hosts:
+        #     DCI:
+        EVPN_SERVICES:
+          children: 
+            Leafs_DC1:
+            # Leafs_DC2:
+        ENDPOINTS:
+          children: 
+            Leafs_DC1:
+            # Leafs_DC2:
