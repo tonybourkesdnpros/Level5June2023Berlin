@@ -1,0 +1,23 @@
+ip virtual-router mac-address 001c.7300.0099
+
+
+
+
+{% for vlan in L2LS['VLANs'] %}
+vlan {{ vlan }}
+{% endfor %}
+
+{% for vlan in L2LS['VLANs'] %}
+{% set octet_list = L2LS['VLANs'][vlan]['SVI'].split('.') %}
+{% set octet1 = octet_list[0] %}
+{% set octet2 = octet_list[1] %}
+{% set octet3 = octet_list[2] %}
+interface vlan {{ vlan }}
+{% if 'spine1' in inventory_hostname %}
+  ip address {{octet1}}.{{octet2}}.{{octet3}}.2/24
+{% endif %}
+{% if 'spine2' in inventory_hostname %}
+  ip address {{octet1}}.{{octet2}}.{{octet3}}.3/24
+{% endif %}
+  ip virtual-router address {{ L2LS['VLANs'][vlan]['SVI'] }}
+{% endfor %}

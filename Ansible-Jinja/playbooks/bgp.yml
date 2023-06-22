@@ -1,0 +1,12 @@
+---
+- name: Generate BGP config from template
+  hosts: leaf1-DC1, leaf2-DC1, leaf3-DC1, leaf4-DC1
+  tasks:
+  - name: Load variables into local dictionary
+    include_vars:
+      file: ../vars/bgp.yml
+      name: bgp
+  - name: Generate BGP config
+    template:
+      src: "{{ lookup('env','PWD') }}/templates/bgp.j2"
+      dest: "{{ lookup('env','PWD') }}/configs/{{ inventory_hostname }}_bgp.cfg"

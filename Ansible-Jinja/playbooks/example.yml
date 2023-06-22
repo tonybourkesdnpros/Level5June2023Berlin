@@ -1,0 +1,12 @@
+---
+- name: List the planets from planets.yml Data Model
+  hosts: localhost
+  tasks:
+  - name: Load variables into local dictionary
+    include_vars:
+      file: ../vars/planets.yml
+      name: planets
+  - name: Generate BGP config
+    template:
+      src: "{{ lookup('env','PWD') }}/templates/example.j2"
+      dest: "{{ lookup('env','PWD') }}/configs/planets.list"

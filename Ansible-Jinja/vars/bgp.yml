@@ -1,0 +1,17 @@
+devices:
+  leaf1-DC1:
+    BGP:
+      ASN: 65100
+      router_id: 1.1.1.1
+  leaf2-DC1:
+    BGP:  
+      ASN: 65100
+      router_id: 2.2.2.2
+  leaf3-DC1:
+    BGP:  
+      ASN: 20
+      router_id: 3.3.3.3
+  leaf4-DC1:
+    BGP:  
+      ASN: 20
+      router_id: 4.4.4.4
