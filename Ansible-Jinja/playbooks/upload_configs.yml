@@ -1,0 +1,10 @@
+---
+- name: Upload configlets to CVP
+  hosts: cvp1
+  vars_files:
+    - ../vars/CVP_model.yml
+  tasks:
+  - name: "Create configlets on CVP"
+    arista.cvp.cv_configlet_v3:
+      configlets: "{{ CVP_CONFIGLETS_EVPN }}"
+      configlets_notes: "Configlet managed by Ansible"

@@ -1,7 +1,7 @@
 ip prefix-list LOOPBACK
 {% set seq = namespace(count = 10) %}
 {% for prefix in EVPN['DC_global']['route_map']%}
-   seq {{ seq.count }} {{ prefix }} eq 32
+   seq {{ seq.count }} permit {{ prefix }} eq 32
 {% set seq.count = seq.count + 10 %}
 {% endfor %}
 

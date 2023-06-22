@@ -1,0 +1,58 @@
+path: "{{lookup('env','PWD')}}"
+
+CVP_CONFIGLETS_EVPN:
+  leaf1-DC1_EVPN: "{{lookup('file','{{path}}/configs/leaf1-DC1_EVPN.cfg')}}"
+  leaf1-DC1_interface: "{{lookup('file','{{path}}/configs/leaf1-DC1_interface.cfg')}}"
+  leaf2-DC1_EVPN: "{{lookup('file','{{path}}/configs/leaf2-DC1_EVPN.cfg')}}"
+  leaf2-DC1_interface: "{{lookup('file','{{path}}/configs/leaf2-DC1_interface.cfg')}}"
+  leaf3-DC1_EVPN: "{{lookup('file','{{path}}/configs/leaf3-DC1_EVPN.cfg')}}"
+  leaf3-DC1_interface: "{{lookup('file','{{path}}/configs/leaf3-DC1_interface.cfg')}}"
+  leaf4-DC1_EVPN: "{{lookup('file','{{path}}/configs/leaf4-DC1_EVPN.cfg')}}"
+  leaf4-DC1_interface: "{{lookup('file','{{path}}/configs/leaf4-DC1_interface.cfg')}}"
+  spine1-DC1_EVPN: "{{lookup('file','{{path}}/configs/spine1-DC1_EVPN.cfg')}}"
+  spine1-DC1_interface: "{{lookup('file','{{path}}/configs/spine1-DC1_interface.cfg')}}"
+  spine2-DC1_EVPN: "{{lookup('file','{{path}}/configs/spine2-DC1_EVPN.cfg')}}"
+  spine2-DC1_interface: "{{lookup('file','{{path}}/configs/spine2-DC1_interface.cfg')}}"
+  spine3-DC1_EVPN: "{{lookup('file','{{path}}/configs/spine3-DC1_EVPN.cfg')}}"
+  spine3-DC1_interface: "{{lookup('file','{{path}}/configs/spine3-DC1_interface.cfg')}}"
+
+CVP_DEVICES_EVPN:
+  - fqdn: spine1-DC1
+    parentContainerName: Spine-DC1
+    configlets:
+      - 'spine1-DC1_interface'
+      - 'spine1-DC1_EVPN'
+  - fqdn: spine2-DC1
+    parentContainerName: Spine-DC1
+    configlets:
+      - 'spine2-DC1_interface'
+      - 'spine2-DC1_EVPN'
+  - fqdn: spine3-DC1
+    parentContainerName: Spine-DC1
+    configlets:
+      - 'spine3-DC1_interface'
+      - 'spine3-DC1_EVPN'
+  - fqdn: leaf1-DC1
+    parentContainerName: Leaf-DC1
+    configlets:
+      - 'MLAG_Left'
+      - 'leaf1-DC1_interface'
+      - 'leaf1-DC1_EVPN'
+  - fqdn: leaf2-DC1
+    parentContainerName: Leaf-DC1
+    configlets:
+      - 'MLAG_Right'
+      - 'leaf2-DC1_interface'
+      - 'leaf2-DC1_EVPN'
+  - fqdn: leaf3-DC1
+    parentContainerName: Leaf-DC1
+    configlets:
+      - 'MLAG_Left'
+      - 'leaf3-DC1_interface'
+      - 'leaf3-DC1_EVPN'
+  - fqdn: leaf4-DC1
+    parentContainerName: Leaf-DC1
+    configlets:
+      - 'MLAG_Right'
+      - 'leaf4-DC1_interface'
+      - 'leaf4-DC1_EVPN'

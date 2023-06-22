@@ -1,6 +1,6 @@
 ---
 - name: Generate interface configs (p2p, loopback)
-  hosts: DC1
+  hosts: DC1, DC2
   tasks:
   - name: Load variables into local dictionary
     include_vars:

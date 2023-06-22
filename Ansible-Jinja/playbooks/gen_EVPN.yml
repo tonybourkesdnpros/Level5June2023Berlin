@@ -10,3 +10,15 @@
     template:
       src: "{{ lookup('env','PWD') }}/templates/EVPN_leaf.j2"
       dest: "{{ lookup('env','PWD') }}/configs/{{ inventory_hostname }}_EVPN.cfg"
+
+- name: Generate EVPN spine configs
+  hosts: Spines_DC1, Spines_DC2
+  tasks:
+  - name: Load variables into local dictionary
+    include_vars:
+      file: ../vars/EVPN_model.yml
+      name: EVPN
+  - name: Generate BGP EVPN config
+    template:
+      src: "{{ lookup('env','PWD') }}/templates/EVPN_spine.j2"
+      dest: "{{ lookup('env','PWD') }}/configs/{{ inventory_hostname }}_EVPN.cfg"
