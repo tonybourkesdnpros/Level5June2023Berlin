@@ -1,6 +1,5 @@
 fabric_name: FABRIC
-# underlay_rfc5549: true
-
+underlay_routing_protocol: OSPF
 spine:
   defaults:
     bgp_as: 65100
@@ -71,7 +70,7 @@ l3leaf:
           mgmt_ip: 192.168.0.25/24
           uplink_switch_interfaces: [Ethernet6, Ethernet6, Ethernet6]
         borderleaf2-DC1:
-          id: 6
+          id: 7
           mgmt_ip: 192.168.0.26/24
           uplink_switch_interfaces: [Ethernet7, Ethernet7, Ethernet7]
 

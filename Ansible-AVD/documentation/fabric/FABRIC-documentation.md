@@ -77,9 +77,9 @@
 | borderleaf1-DC1 | Ethernet3 | 192.168.103.25/31 | spine1-DC1 | Ethernet6 | 192.168.103.24/31 |
 | borderleaf1-DC1 | Ethernet4 | 192.168.103.27/31 | spine2-DC1 | Ethernet6 | 192.168.103.26/31 |
 | borderleaf1-DC1 | Ethernet5 | 192.168.103.29/31 | spine3-DC1 | Ethernet6 | 192.168.103.28/31 |
-| borderleaf2-DC1 | Ethernet3 | 192.168.103.31/31 | spine1-DC1 | Ethernet7 | 192.168.103.30/31 |
-| borderleaf2-DC1 | Ethernet4 | 192.168.103.33/31 | spine2-DC1 | Ethernet7 | 192.168.103.32/31 |
-| borderleaf2-DC1 | Ethernet5 | 192.168.103.35/31 | spine3-DC1 | Ethernet7 | 192.168.103.34/31 |
+| borderleaf2-DC1 | Ethernet3 | 192.168.103.37/31 | spine1-DC1 | Ethernet7 | 192.168.103.36/31 |
+| borderleaf2-DC1 | Ethernet4 | 192.168.103.39/31 | spine2-DC1 | Ethernet7 | 192.168.103.38/31 |
+| borderleaf2-DC1 | Ethernet5 | 192.168.103.41/31 | spine3-DC1 | Ethernet7 | 192.168.103.40/31 |
 | leaf1-DC1 | Ethernet3 | 192.168.103.1/31 | spine1-DC1 | Ethernet2 | 192.168.103.0/31 |
 | leaf1-DC1 | Ethernet4 | 192.168.103.3/31 | spine2-DC1 | Ethernet2 | 192.168.103.2/31 |
 | leaf1-DC1 | Ethernet5 | 192.168.103.5/31 | spine3-DC1 | Ethernet2 | 192.168.103.4/31 |
@@ -104,7 +104,7 @@
 | POD | Node | Loopback0 |
 | --- | ---- | --------- |
 | FABRIC | borderleaf1-DC1 | 192.168.101.5/32 |
-| FABRIC | borderleaf2-DC1 | 192.168.101.6/32 |
+| FABRIC | borderleaf2-DC1 | 192.168.101.7/32 |
 | FABRIC | leaf1-DC1 | 192.168.101.1/32 |
 | FABRIC | leaf2-DC1 | 192.168.101.2/32 |
 | FABRIC | leaf3-DC1 | 192.168.101.3/32 |

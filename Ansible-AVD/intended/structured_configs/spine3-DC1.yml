@@ -6,10 +6,6 @@ router_bgp:
   - distance bgp 20 200 200
   - maximum-paths 4 ecmp 4
   peer_groups:
-    IPv4-UNDERLAY-PEERS:
-      type: ipv4
-      maximum_routes: 12000
-      send_community: all
     EVPN-OVERLAY-PEERS:
       type: evpn
       update_source: Loopback0
@@ -20,43 +16,18 @@ router_bgp:
       next_hop_unchanged: true
   address_family_ipv4:
     peer_groups:
-      IPv4-UNDERLAY-PEERS:
-        activate: true
       EVPN-OVERLAY-PEERS:
         activate: false
-  redistribute_routes:
-    connected:
-      route_map: RM-CONN-2-BGP
+  address_family_evpn:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
   neighbors:
-    192.168.103.5:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: '65101'
-      description: leaf1-DC1_Ethernet5
-    192.168.103.11:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: '65101'
-      description: leaf2-DC1_Ethernet5
-    192.168.103.17:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: '65102'
-      description: leaf3-DC1_Ethernet5
-    192.168.103.23:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: '65102'
-      description: leaf4-DC1_Ethernet5
-    192.168.103.29:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: '65103'
-      description: borderleaf1-DC1_Ethernet5
-    192.168.103.35:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: '65103'
-      description: borderleaf2-DC1_Ethernet5
     192.168.101.5:
       peer_group: EVPN-OVERLAY-PEERS
       description: borderleaf1-DC1
       remote_as: '65103'
-    192.168.101.6:
+    192.168.101.7:
       peer_group: EVPN-OVERLAY-PEERS
       description: borderleaf2-DC1
       remote_as: '65103'
@@ -76,10 +47,6 @@ router_bgp:
       peer_group: EVPN-OVERLAY-PEERS
       description: leaf4-DC1
       remote_as: '65102'
-  address_family_evpn:
-    peer_groups:
-      EVPN-OVERLAY-PEERS:
-        activate: true
 static_routes:
 - vrf: default
   destination_address_prefix: 0.0.0.0/0
@@ -118,6 +85,8 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 192.168.103.4/31
+    ospf_network_point_to_point: true
+    ospf_area: 0.0.0.0
   Ethernet3:
     peer: leaf2-DC1
     peer_interface: Ethernet5
@@ -127,6 +96,8 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 192.168.103.10/31
+    ospf_network_point_to_point: true
+    ospf_area: 0.0.0.0
   Ethernet4:
     peer: leaf3-DC1
     peer_interface: Ethernet5
@@ -136,6 +107,8 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 192.168.103.16/31
+    ospf_network_point_to_point: true
+    ospf_area: 0.0.0.0
   Ethernet5:
     peer: leaf4-DC1
     peer_interface: Ethernet5
@@ -145,6 +118,8 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 192.168.103.22/31
+    ospf_network_point_to_point: true
+    ospf_area: 0.0.0.0
   Ethernet6:
     peer: borderleaf1-DC1
     peer_interface: Ethernet5
@@ -154,6 +129,8 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 192.168.103.28/31
+    ospf_network_point_to_point: true
+    ospf_area: 0.0.0.0
   Ethernet7:
     peer: borderleaf2-DC1
     peer_interface: Ethernet5
@@ -162,24 +139,28 @@ ethernet_interfaces:
     mtu: 9000
     type: routed
     shutdown: false
-    ip_address: 192.168.103.34/31
+    ip_address: 192.168.103.40/31
+    ospf_network_point_to_point: true
+    ospf_area: 0.0.0.0
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
     shutdown: false
     ip_address: 192.168.101.13/32
-prefix_lists:
-  PL-LOOPBACKS-EVPN-OVERLAY:
-    sequence_numbers:
-      10:
-        action: permit 192.168.101.0/24 eq 32
-route_maps:
-  RM-CONN-2-BGP:
-    sequence_numbers:
-      10:
-        type: permit
-        match:
-        - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+    ospf_area: 0.0.0.0
+router_ospf:
+  process_ids:
+    100:
+      passive_interface_default: true
+      router_id: 192.168.101.13
+      no_passive_interfaces:
+      - Ethernet2
+      - Ethernet3
+      - Ethernet4
+      - Ethernet5
+      - Ethernet6
+      - Ethernet7
+      max_lsa: 12000
 router_bfd:
   multihop:
     interval: 300
