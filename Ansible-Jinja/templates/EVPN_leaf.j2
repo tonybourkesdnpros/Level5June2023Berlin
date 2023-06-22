@@ -1,0 +1,61 @@
+ip prefix-list LOOPBACK
+{% set seq = namespace(count = 10) %}
+{% for prefix in EVPN['DC_global']['route_map']%}
+   seq {{ seq.count }} {{ prefix }} eq 32
+{% set seq.count = seq.count + 10 %}
+{% endfor %}
+
+route-map LOOPBACK permit 10
+   match ip address prefix-list LOOPBACK
+
+router bgp {{ EVPN['devices'][inventory_hostname]['BGP']['ASN'] }}
+   router-id {{ EVPN['devices'][inventory_hostname]['interfaces']['loopback0']['ipv4'] }}
+
+
+
+
+   no bgp default ipv4-unicast
+   maximum-paths 3
+   distance bgp 20 200 200
+
+
+   neighbor Underlay peer group  
+{% set DC = inventory_hostname.split('-')[1] %}
+   neighbor Underlay remote-as {{ EVPN['DC_global'][DC]['spine_ASN']}}
+   neighbor Underlay send-community 
+   neighbor Underlay maximum-routes 12000
+
+   neighbor LEAF_Peer peer group
+   neighbor LEAF_Peer remote-as {{ EVPN['devices'][inventory_hostname]['BGP']['ASN'] }}
+   neighbor LEAF_Peer next-hop-self
+   neighbor LEAF_Peer maximum-routes 12000
+
+{% for neighbor in EVPN['devices'][inventory_hostname]['BGP']['spine_peers'] %}
+   neighbor {{ neighbor }} peer group Underlay
+{% endfor %}
+
+{% if EVPN['devices'][inventory_hostname]['MLAG'] == 'Even' %}
+   neighbor 192.168.255.1 peer group LEAF_Peer
+{% endif %}
+{% if EVPN['devices'][inventory_hostname]['MLAG'] == 'Odd' %}
+   neighbor 192.168.255.2 peer group LEAF_Peer
+{% endif %}
+
+   neighbor EVPN peer group
+ 
+   neighbor EVPN remote-as {{ EVPN['DC_global'][DC]['spine_ASN']}}
+  
+    neighbor EVPN update-source Loopback0
+    neighbor EVPN ebgp-multihop 3
+    neighbor EVPN send-community 
+    neighbor EVPN maximum-routes 0
+{% for neighbor in EVPN['DC_global'][DC]['spine_peers'] %}
+    neighbor {{ neighbor }} peer group EVPN
+{% endfor %}
+    address-family evpn
+      neighbor EVPN activate
+   
+    address-family ipv4
+      neighbor Underlay activate
+      neighbor LEAF_Peer activate
+      redistribute connected route-map LOOPBACK
