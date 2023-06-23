@@ -1,5 +1,6 @@
 fabric_name: FABRIC
 p2p_uplinks_mtu: 1550
+underlay_rfc5549: true
 
 
 dns_domain: atd.lab

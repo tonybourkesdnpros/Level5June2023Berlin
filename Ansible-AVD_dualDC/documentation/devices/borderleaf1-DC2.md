@@ -376,6 +376,12 @@ interface Loopback1
 | Vlan4093 |  default  |  10.255.251.8/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  10.255.252.8/31  |  -  |  -  |  -  |  -  |  -  |
 
+#### IPv6
+
+| Interface | VRF | IPv6 Address | IPv6 Virtual Address | Virtual Router Address | VRRP | ND RA Disabled | Managed Config Flag | IPv6 ACL In | IPv6 ACL Out |
+| --------- | --- | ------------ | -------------------- | ---------------------- | ---- | -------------- | ------------------- | ----------- | ------------ |
+| Vlan10 | Spock | - | 2001:db8::1/64 | - | - | - | - | - | - |
+
 ### VLAN Interfaces Device Configuration
 
 ```eos
@@ -384,6 +390,7 @@ interface Vlan10
    description DMZ
    no shutdown
    vrf Spock
+   ipv6 address virtual 2001:db8::1/64
    ip address virtual 10.1.10.1/24
 !
 interface Vlan20
@@ -498,7 +505,7 @@ ip routing vrf Spock
 | --- | --------------- |
 | default | False |
 | default | false |
-| Spock | false |
+| Spock | true |
 
 ## Static Routes
 

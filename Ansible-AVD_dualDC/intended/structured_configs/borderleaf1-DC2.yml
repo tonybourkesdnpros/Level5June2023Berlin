@@ -150,6 +150,7 @@ vrfs:
   Spock:
     tenant: Kirk
     ip_routing: true
+    ipv6_routing: true
 management_interfaces:
   Management0:
     description: oob_management
@@ -202,6 +203,7 @@ vlan_interfaces:
     shutdown: false
     vrf: Spock
     ip_address_virtual: 10.1.10.1/24
+    ipv6_address_virtual: 2001:db8::1/64
   Vlan20:
     tenant: Kirk
     description: Internal
