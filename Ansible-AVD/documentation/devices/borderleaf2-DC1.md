@@ -230,9 +230,9 @@ vlan 4094
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet3 | P2P_LINK_TO_SPINE1-DC1_Ethernet7 | routed | - | 192.168.103.37/31 | default | 9000 | false | - | - |
-| Ethernet4 | P2P_LINK_TO_SPINE2-DC1_Ethernet7 | routed | - | 192.168.103.39/31 | default | 9000 | false | - | - |
-| Ethernet5 | P2P_LINK_TO_SPINE3-DC1_Ethernet7 | routed | - | 192.168.103.41/31 | default | 9000 | false | - | - |
+| Ethernet3 | P2P_LINK_TO_SPINE1-DC1_Ethernet7 | routed | - | 192.168.103.37/31 | default | 9000 | False | - | - |
+| Ethernet4 | P2P_LINK_TO_SPINE2-DC1_Ethernet7 | routed | - | 192.168.103.39/31 | default | 9000 | False | - | - |
+| Ethernet5 | P2P_LINK_TO_SPINE3-DC1_Ethernet7 | routed | - | 192.168.103.41/31 | default | 9000 | False | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -342,11 +342,11 @@ interface Loopback1
 
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
-| Vlan10 | DMZ | Spock | - | false |
-| Vlan20 | Internal | Spock | - | false |
-| Vlan3999 | MLAG_PEER_L3_iBGP: vrf Spock | Spock | 9000 | false |
-| Vlan4093 | MLAG_PEER_L3_PEERING | default | 9000 | false |
-| Vlan4094 | MLAG_PEER | default | 9000 | false |
+| Vlan10 | DMZ | Spock | - | False |
+| Vlan20 | Internal | Spock | - | False |
+| Vlan3999 | MLAG_PEER_L3_iBGP: vrf Spock | Spock | 9000 | False |
+| Vlan4093 | MLAG_PEER_L3_PEERING | default | 9000 | False |
+| Vlan4094 | MLAG_PEER | default | 9000 | False |
 
 #### IPv4
 
@@ -463,7 +463,7 @@ ip virtual-router mac-address 00:1c:73:00:00:99
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | true |
+| default | True |
 | default | false |
 | Spock | true |
 
@@ -480,7 +480,7 @@ ip routing vrf Spock
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | false |
+| default | False |
 | default | false |
 | Spock | false |
 

@@ -10,6 +10,7 @@
     template:
       src: "{{ lookup('env','PWD') }}/templates/EVPN_leaf.j2"
       dest: "{{ lookup('env','PWD') }}/configs/{{ inventory_hostname }}_EVPN.cfg"
+      mode: "0644"
 
 - name: Generate EVPN spine configs
   hosts: Spines_DC1, Spines_DC2
@@ -22,3 +23,4 @@
     template:
       src: "{{ lookup('env','PWD') }}/templates/EVPN_spine.j2"
       dest: "{{ lookup('env','PWD') }}/configs/{{ inventory_hostname }}_EVPN.cfg"
+      mode: "0644"

@@ -31,26 +31,39 @@ router_bgp:
     peer_groups:
       MLAG-IPv4-UNDERLAY-PEER:
         activate: true
+        next_hop:
+          address_family_ipv6_originate: true
       IPv4-UNDERLAY-PEERS:
         activate: true
+        next_hop:
+          address_family_ipv6_originate: true
       EVPN-OVERLAY-PEERS:
         activate: false
-  neighbors:
-    10.255.251.8:
+  neighbor_interfaces:
+    Vlan4093:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
+      remote_as: '65103'
       description: borderleaf1-DC2
-    192.168.203.48:
+    Ethernet3:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65200'
       description: spine1-DC2_Ethernet7
-    192.168.203.50:
+    Ethernet4:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65200'
       description: spine2-DC2_Ethernet7
-    192.168.203.52:
+    Ethernet5:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65200'
       description: spine3-DC2_Ethernet7
+  redistribute_routes:
+    connected:
+      route_map: RM-CONN-2-BGP
+  address_family_evpn:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
+  neighbors:
     192.168.101.11:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine1-DC1
@@ -80,13 +93,6 @@ router_bgp:
       description: DCI
       peer_group: IPv4-UNDERLAY-PEERS
       local_as: '65203'
-  redistribute_routes:
-    connected:
-      route_map: RM-CONN-2-BGP
-  address_family_evpn:
-    peer_groups:
-      EVPN-OVERLAY-PEERS:
-        activate: true
   vrfs:
     Spock:
       router_id: 192.168.201.7
@@ -126,6 +132,8 @@ static_routes:
   gateway: 192.168.0.1
 service_routing_protocols_model: multi-agent
 ip_routing: true
+ipv6_unicast_routing: true
+ip_routing_ipv6_interfaces: true
 vlan_internal_order:
   allocation: ascending
   range:
@@ -189,7 +197,7 @@ vlan_interfaces:
   Vlan4093:
     description: MLAG_PEER_L3_PEERING
     shutdown: false
-    ip_address: 10.255.251.9/31
+    ipv6_enable: true
     mtu: 1550
   Vlan4094:
     description: MLAG_PEER
@@ -257,7 +265,7 @@ ethernet_interfaces:
     mtu: 1550
     type: routed
     shutdown: false
-    ip_address: 192.168.203.49/31
+    ipv6_enable: true
   Ethernet4:
     peer: spine2-DC2
     peer_interface: Ethernet7
@@ -266,7 +274,7 @@ ethernet_interfaces:
     mtu: 1550
     type: routed
     shutdown: false
-    ip_address: 192.168.203.51/31
+    ipv6_enable: true
   Ethernet5:
     peer: spine3-DC2
     peer_interface: Ethernet7
@@ -275,7 +283,7 @@ ethernet_interfaces:
     mtu: 1550
     type: routed
     shutdown: false
-    ip_address: 192.168.203.53/31
+    ipv6_enable: true
   Ethernet12:
     peer: DCI
     peer_interface: Ethernet4

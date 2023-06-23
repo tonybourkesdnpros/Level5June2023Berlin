@@ -261,8 +261,16 @@ ip routing
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | False |
+| default | True |
 | default | false |
+
+### IPv6 Routing Device Configuration
+
+```eos
+!
+ipv6 unicast-routing
+ip routing ipv6 interfaces
+```
 
 ## Static Routes
 
@@ -366,6 +374,7 @@ router bgp 65000
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
+      neighbor IPv4-UNDERLAY-PEERS next-hop address-family ipv6 originate
       neighbor IPv4-UNDERLAY-PEERS activate
 ```
 

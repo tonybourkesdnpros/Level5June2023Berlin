@@ -147,12 +147,12 @@ vlan internal order ascending range 1006 1199
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet2 | P2P_LINK_TO_LEAF1-DC1_Ethernet3 | routed | - | 192.168.103.0/31 | default | 9000 | false | - | - |
-| Ethernet3 | P2P_LINK_TO_LEAF2-DC1_Ethernet3 | routed | - | 192.168.103.6/31 | default | 9000 | false | - | - |
-| Ethernet4 | P2P_LINK_TO_LEAF3-DC1_Ethernet3 | routed | - | 192.168.103.12/31 | default | 9000 | false | - | - |
-| Ethernet5 | P2P_LINK_TO_LEAF4-DC1_Ethernet3 | routed | - | 192.168.103.18/31 | default | 9000 | false | - | - |
-| Ethernet6 | P2P_LINK_TO_BORDERLEAF1-DC1_Ethernet3 | routed | - | 192.168.103.24/31 | default | 9000 | false | - | - |
-| Ethernet7 | P2P_LINK_TO_BORDERLEAF2-DC1_Ethernet3 | routed | - | 192.168.103.36/31 | default | 9000 | false | - | - |
+| Ethernet2 | P2P_LINK_TO_LEAF1-DC1_Ethernet3 | routed | - | 192.168.103.0/31 | default | 9000 | False | - | - |
+| Ethernet3 | P2P_LINK_TO_LEAF2-DC1_Ethernet3 | routed | - | 192.168.103.6/31 | default | 9000 | False | - | - |
+| Ethernet4 | P2P_LINK_TO_LEAF3-DC1_Ethernet3 | routed | - | 192.168.103.12/31 | default | 9000 | False | - | - |
+| Ethernet5 | P2P_LINK_TO_LEAF4-DC1_Ethernet3 | routed | - | 192.168.103.18/31 | default | 9000 | False | - | - |
+| Ethernet6 | P2P_LINK_TO_BORDERLEAF1-DC1_Ethernet3 | routed | - | 192.168.103.24/31 | default | 9000 | False | - | - |
+| Ethernet7 | P2P_LINK_TO_BORDERLEAF2-DC1_Ethernet3 | routed | - | 192.168.103.36/31 | default | 9000 | False | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -257,7 +257,7 @@ service routing protocols model multi-agent
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | true |
+| default | True |
 | default | false |
 
 ### IP Routing Device Configuration
@@ -272,7 +272,7 @@ ip routing
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | false |
+| default | False |
 | default | false |
 
 ## Static Routes

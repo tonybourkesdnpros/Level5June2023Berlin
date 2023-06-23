@@ -1,5 +1,5 @@
 ---
-- name: Apply configlets to devices in CVP 
+- name: Apply configlets to devices in CVP
   hosts: cvp1
   vars_files:
     - ../vars/CVP_model.yml

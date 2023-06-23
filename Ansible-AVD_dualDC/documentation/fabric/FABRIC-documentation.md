@@ -106,53 +106,17 @@
 
 | Uplink IPv4 Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | ---------------- | ------------------- | ------------------ | ------------------ |
-| 192.168.103.0/24 | 256 | 36 | 14.07 % |
-| 192.168.203.0/24 | 256 | 36 | 14.07 % |
+| 192.168.103.0/24 | 256 | 0 | 0.0 % |
+| 192.168.203.0/24 | 256 | 0 | 0.0 % |
 
 ## Point-To-Point Links Node Allocation
 
 | Node | Node Interface | Node IP Address | Peer Node | Peer Interface | Peer IP Address |
 | ---- | -------------- | --------------- | --------- | -------------- | --------------- |
-| borderleaf1-DC1 | Ethernet3 | 192.168.103.33/31 | spine1-DC1 | Ethernet6 | 192.168.103.32/31 |
-| borderleaf1-DC1 | Ethernet4 | 192.168.103.35/31 | spine2-DC1 | Ethernet6 | 192.168.103.34/31 |
-| borderleaf1-DC1 | Ethernet5 | 192.168.103.37/31 | spine3-DC1 | Ethernet6 | 192.168.103.36/31 |
 | borderleaf1-DC1 | Ethernet12 | 172.31.252.0/31 | DCI | Ethernet1 | 172.31.252.1/31 |
-| borderleaf1-DC2 | Ethernet3 | 192.168.203.33/31 | spine1-DC2 | Ethernet6 | 192.168.203.32/31 |
-| borderleaf1-DC2 | Ethernet4 | 192.168.203.35/31 | spine2-DC2 | Ethernet6 | 192.168.203.34/31 |
-| borderleaf1-DC2 | Ethernet5 | 192.168.203.37/31 | spine3-DC2 | Ethernet6 | 192.168.203.36/31 |
 | borderleaf1-DC2 | Ethernet12 | 172.31.252.4/31 | DCI | Ethernet3 | 172.31.252.5/31 |
-| borderleaf2-DC1 | Ethernet3 | 192.168.103.49/31 | spine1-DC1 | Ethernet7 | 192.168.103.48/31 |
-| borderleaf2-DC1 | Ethernet4 | 192.168.103.51/31 | spine2-DC1 | Ethernet7 | 192.168.103.50/31 |
-| borderleaf2-DC1 | Ethernet5 | 192.168.103.53/31 | spine3-DC1 | Ethernet7 | 192.168.103.52/31 |
 | borderleaf2-DC1 | Ethernet12 | 172.31.252.2/31 | DCI | Ethernet2 | 172.31.252.3/31 |
-| borderleaf2-DC2 | Ethernet3 | 192.168.203.49/31 | spine1-DC2 | Ethernet7 | 192.168.203.48/31 |
-| borderleaf2-DC2 | Ethernet4 | 192.168.203.51/31 | spine2-DC2 | Ethernet7 | 192.168.203.50/31 |
-| borderleaf2-DC2 | Ethernet5 | 192.168.203.53/31 | spine3-DC2 | Ethernet7 | 192.168.203.52/31 |
 | borderleaf2-DC2 | Ethernet12 | 172.31.252.6/31 | DCI | Ethernet4 | 172.31.252.7/31 |
-| leaf1-DC1 | Ethernet3 | 192.168.103.1/31 | spine1-DC1 | Ethernet2 | 192.168.103.0/31 |
-| leaf1-DC1 | Ethernet4 | 192.168.103.3/31 | spine2-DC1 | Ethernet2 | 192.168.103.2/31 |
-| leaf1-DC1 | Ethernet5 | 192.168.103.5/31 | spine3-DC1 | Ethernet2 | 192.168.103.4/31 |
-| leaf1-DC2 | Ethernet3 | 192.168.203.1/31 | spine1-DC2 | Ethernet2 | 192.168.203.0/31 |
-| leaf1-DC2 | Ethernet4 | 192.168.203.3/31 | spine2-DC2 | Ethernet2 | 192.168.203.2/31 |
-| leaf1-DC2 | Ethernet5 | 192.168.203.5/31 | spine3-DC2 | Ethernet2 | 192.168.203.4/31 |
-| leaf2-DC1 | Ethernet3 | 192.168.103.7/31 | spine1-DC1 | Ethernet3 | 192.168.103.6/31 |
-| leaf2-DC1 | Ethernet4 | 192.168.103.9/31 | spine2-DC1 | Ethernet3 | 192.168.103.8/31 |
-| leaf2-DC1 | Ethernet5 | 192.168.103.11/31 | spine3-DC1 | Ethernet3 | 192.168.103.10/31 |
-| leaf2-DC2 | Ethernet3 | 192.168.203.7/31 | spine1-DC2 | Ethernet3 | 192.168.203.6/31 |
-| leaf2-DC2 | Ethernet4 | 192.168.203.9/31 | spine2-DC2 | Ethernet3 | 192.168.203.8/31 |
-| leaf2-DC2 | Ethernet5 | 192.168.203.11/31 | spine3-DC2 | Ethernet3 | 192.168.203.10/31 |
-| leaf3-DC1 | Ethernet3 | 192.168.103.13/31 | spine1-DC1 | Ethernet4 | 192.168.103.12/31 |
-| leaf3-DC1 | Ethernet4 | 192.168.103.15/31 | spine2-DC1 | Ethernet4 | 192.168.103.14/31 |
-| leaf3-DC1 | Ethernet5 | 192.168.103.17/31 | spine3-DC1 | Ethernet4 | 192.168.103.16/31 |
-| leaf3-DC2 | Ethernet3 | 192.168.203.13/31 | spine1-DC2 | Ethernet4 | 192.168.203.12/31 |
-| leaf3-DC2 | Ethernet4 | 192.168.203.15/31 | spine2-DC2 | Ethernet4 | 192.168.203.14/31 |
-| leaf3-DC2 | Ethernet5 | 192.168.203.17/31 | spine3-DC2 | Ethernet4 | 192.168.203.16/31 |
-| leaf4-DC1 | Ethernet3 | 192.168.103.19/31 | spine1-DC1 | Ethernet5 | 192.168.103.18/31 |
-| leaf4-DC1 | Ethernet4 | 192.168.103.21/31 | spine2-DC1 | Ethernet5 | 192.168.103.20/31 |
-| leaf4-DC1 | Ethernet5 | 192.168.103.23/31 | spine3-DC1 | Ethernet5 | 192.168.103.22/31 |
-| leaf4-DC2 | Ethernet3 | 192.168.203.19/31 | spine1-DC2 | Ethernet5 | 192.168.203.18/31 |
-| leaf4-DC2 | Ethernet4 | 192.168.203.21/31 | spine2-DC2 | Ethernet5 | 192.168.203.20/31 |
-| leaf4-DC2 | Ethernet5 | 192.168.203.23/31 | spine3-DC2 | Ethernet5 | 192.168.203.22/31 |
 
 ## Loopback Interfaces (BGP EVPN Peering)
 

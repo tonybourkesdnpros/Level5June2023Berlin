@@ -246,13 +246,13 @@ vlan 4094
 
 *Inherited from Port-Channel Interface
 
-#### IPv4
+#### IPv6
 
-| Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
-| --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet3 | P2P_LINK_TO_SPINE1-DC1_Ethernet2 | routed | - | 192.168.103.1/31 | default | 1550 | False | - | - |
-| Ethernet4 | P2P_LINK_TO_SPINE2-DC1_Ethernet2 | routed | - | 192.168.103.3/31 | default | 1550 | False | - | - |
-| Ethernet5 | P2P_LINK_TO_SPINE3-DC1_Ethernet2 | routed | - | 192.168.103.5/31 | default | 1550 | False | - | - |
+| Interface | Description | Type | Channel Group | IPv6 Address | VRF | MTU | Shutdown | ND RA Disabled | Managed Config Flag | IPv6 ACL In | IPv6 ACL Out |
+| --------- | ----------- | ---- | --------------| ------------ | --- | --- | -------- | -------------- | -------------------| ----------- | ------------ |
+| Ethernet3 | P2P_LINK_TO_SPINE1-DC1_Ethernet2 | routed | - | - | default | 1550 | False | - | - | - | - |
+| Ethernet4 | P2P_LINK_TO_SPINE2-DC1_Ethernet2 | routed | - | - | default | 1550 | False | - | - | - | - |
+| Ethernet5 | P2P_LINK_TO_SPINE3-DC1_Ethernet2 | routed | - | - | default | 1550 | False | - | - | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -273,21 +273,21 @@ interface Ethernet3
    no shutdown
    mtu 1550
    no switchport
-   ip address 192.168.103.1/31
+   ipv6 enable
 !
 interface Ethernet4
    description P2P_LINK_TO_SPINE2-DC1_Ethernet2
    no shutdown
    mtu 1550
    no switchport
-   ip address 192.168.103.3/31
+   ipv6 enable
 !
 interface Ethernet5
    description P2P_LINK_TO_SPINE3-DC1_Ethernet2
    no shutdown
    mtu 1550
    no switchport
-   ip address 192.168.103.5/31
+   ipv6 enable
 !
 interface Ethernet6
    description host1-DC1_E1
@@ -386,7 +386,7 @@ interface Loopback1
 | Vlan10 |  Spock  |  -  |  10.1.10.1/24  |  -  |  -  |  -  |  -  |
 | Vlan20 |  Spock  |  -  |  10.1.20.1/24  |  -  |  -  |  -  |  -  |
 | Vlan3999 |  Spock  |  10.255.251.0/31  |  -  |  -  |  -  |  -  |  -  |
-| Vlan4093 |  default  |  10.255.251.0/31  |  -  |  -  |  -  |  -  |  -  |
+| Vlan4093 |  default  |  -  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  10.255.252.0/31  |  -  |  -  |  -  |  -  |  -  |
 
 #### IPv6
@@ -423,7 +423,7 @@ interface Vlan4093
    description MLAG_PEER_L3_PEERING
    no shutdown
    mtu 1550
-   ip address 10.255.251.0/31
+   ipv6 enable
 !
 interface Vlan4094
    description MLAG_PEER
@@ -516,9 +516,18 @@ ip routing vrf Spock
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | False |
+| default | True |
 | default | false |
 | Spock | true |
+
+### IPv6 Routing Device Configuration
+
+```eos
+!
+ipv6 unicast-routing
+ip routing ipv6 interfaces
+ipv6 unicast-routing vrf Spock
+```
 
 ## Static Routes
 
@@ -586,14 +595,19 @@ ip route 0.0.0.0/0 192.168.0.1
 
 | Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain |
 | -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- |
-| 10.255.251.1 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - |
 | 192.168.101.11 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
 | 192.168.101.12 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
 | 192.168.101.13 | 65100 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
-| 192.168.103.0 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
-| 192.168.103.2 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
-| 192.168.103.4 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
 | 10.255.251.1 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Spock | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - |
+
+### BGP Neighbor Interfaces
+
+| Neighbor Interface | VRF | Peer Group | Remote AS | Peer Filter |
+| ------------------ | --- | ---------- | --------- | ----------- |
+| Ethernet3 | default | IPv4-UNDERLAY-PEERS | 65100 | - |
+| Ethernet4 | default | IPv4-UNDERLAY-PEERS | 65100 | - |
+| Ethernet5 | default | IPv4-UNDERLAY-PEERS | 65100 | - |
+| Vlan4093 | default | MLAG-IPv4-UNDERLAY-PEER | 65101 | - |
 
 ### Router BGP EVPN Address Family
 
@@ -643,8 +657,10 @@ router bgp 65101
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
    neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
-   neighbor 10.255.251.1 peer group MLAG-IPv4-UNDERLAY-PEER
-   neighbor 10.255.251.1 description leaf2-DC1
+   neighbor interface Ethernet3 peer-group IPv4-UNDERLAY-PEERS remote-as 65100
+   neighbor interface Ethernet4 peer-group IPv4-UNDERLAY-PEERS remote-as 65100
+   neighbor interface Ethernet5 peer-group IPv4-UNDERLAY-PEERS remote-as 65100
+   neighbor interface Vlan4093 peer-group MLAG-IPv4-UNDERLAY-PEER remote-as 65101
    neighbor 192.168.101.11 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.101.11 remote-as 65100
    neighbor 192.168.101.11 description spine1-DC1
@@ -654,15 +670,6 @@ router bgp 65101
    neighbor 192.168.101.13 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.101.13 remote-as 65100
    neighbor 192.168.101.13 description spine3-DC1
-   neighbor 192.168.103.0 peer group IPv4-UNDERLAY-PEERS
-   neighbor 192.168.103.0 remote-as 65100
-   neighbor 192.168.103.0 description spine1-DC1_Ethernet2
-   neighbor 192.168.103.2 peer group IPv4-UNDERLAY-PEERS
-   neighbor 192.168.103.2 remote-as 65100
-   neighbor 192.168.103.2 description spine2-DC1_Ethernet2
-   neighbor 192.168.103.4 peer group IPv4-UNDERLAY-PEERS
-   neighbor 192.168.103.4 remote-as 65100
-   neighbor 192.168.103.4 description spine3-DC1_Ethernet2
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan 10
@@ -680,7 +687,9 @@ router bgp 65101
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
+      neighbor IPv4-UNDERLAY-PEERS next-hop address-family ipv6 originate
       neighbor IPv4-UNDERLAY-PEERS activate
+      neighbor MLAG-IPv4-UNDERLAY-PEER next-hop address-family ipv6 originate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
    vrf Spock

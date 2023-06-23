@@ -10,3 +10,4 @@
     template:
       src: "{{ lookup('env','PWD') }}/templates/EVPN_interfaces.j2"
       dest: "{{ lookup('env','PWD') }}/configs/{{ inventory_hostname }}_interface.cfg"
+      mode: "0644"

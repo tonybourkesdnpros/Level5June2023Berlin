@@ -20,6 +20,8 @@ router_bgp:
     peer_groups:
       IPv4-UNDERLAY-PEERS:
         activate: true
+        next_hop:
+          address_family_ipv6_originate: true
       EVPN-OVERLAY-PEERS:
         activate: false
   redistribute_routes:
@@ -52,6 +54,8 @@ static_routes:
   gateway: 192.168.0.1
 service_routing_protocols_model: multi-agent
 ip_routing: true
+ipv6_unicast_routing: true
+ip_routing_ipv6_interfaces: true
 vlan_internal_order:
   allocation: ascending
   range:
