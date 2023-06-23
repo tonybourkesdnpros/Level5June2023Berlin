@@ -1,0 +1,142 @@
+router_bgp:
+  as: '65000'
+  router_id: 192.168.90.1
+  bgp_defaults:
+  - maximum-paths 4 ecmp 4
+  peer_groups:
+    IPv4-UNDERLAY-PEERS:
+      type: ipv4
+      maximum_routes: 12000
+      send_community: all
+    EVPN-OVERLAY-PEERS:
+      type: evpn
+      update_source: Loopback0
+      bfd: true
+      ebgp_multihop: '3'
+      send_community: all
+      maximum_routes: 0
+      next_hop_unchanged: true
+  address_family_ipv4:
+    peer_groups:
+      IPv4-UNDERLAY-PEERS:
+        activate: true
+      EVPN-OVERLAY-PEERS:
+        activate: false
+  redistribute_routes:
+    connected:
+      route_map: RM-CONN-2-BGP
+  address_family_evpn:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
+  neighbors:
+    172.31.252.0:
+      remote_as: '65103'
+      description: borderleaf1-DC1
+      peer_group: IPv4-UNDERLAY-PEERS
+    172.31.252.2:
+      remote_as: '65103'
+      description: borderleaf2-DC1
+      peer_group: IPv4-UNDERLAY-PEERS
+    172.31.252.4:
+      remote_as: '65203'
+      description: borderleaf1-DC2
+      peer_group: IPv4-UNDERLAY-PEERS
+    172.31.252.6:
+      remote_as: '65203'
+      description: borderleaf2-DC2
+      peer_group: IPv4-UNDERLAY-PEERS
+static_routes:
+- vrf: default
+  destination_address_prefix: 0.0.0.0/0
+  gateway: 192.168.0.1
+service_routing_protocols_model: multi-agent
+ip_routing: true
+vlan_internal_order:
+  allocation: ascending
+  range:
+    beginning: 1006
+    ending: 1199
+spanning_tree:
+  mode: none
+local_users:
+  automator:
+    privilege: 15
+    role: network-admin
+    no_password: true
+    ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQClbCIMYD4dzZpdmyHDsT7qyjx9uH4KdZcMRMbbAYhM4PvSnCC5/Hi0XPYesW+pyNldL21PkkS7pLPnBN01qGX7Bz8XxhM742+vRN2q07esxQRugGRaxSzS/jrS/6bwcFtKDsdh0GkSZ91r0qC8s5rktZjsnaaEq9FMZJI3jBNYXqV3uBaxnUQuM0+BFgfXoc+rfGeLpAjOdckqF/a3aTL4ReSlNmiXl5Qb1bAuE4h0GHGp4/KEDkEXaRoX1d4sVE2Y9+P1BM6fnMQFLIuCYVDvaUYNJVV/5hCAx48FsYRbZ3JqTi+8MxylYKUNF37e+ebEb5/J7RxU5tG234yk5Sht
+      arista@level5berlin-1-fa2e7965
+vrfs:
+  default:
+    ip_routing: false
+management_interfaces:
+  Management0:
+    description: oob_management
+    shutdown: false
+    vrf: default
+    ip_address: 192.168.0.76/24
+    gateway: 192.168.0.1
+    type: oob
+management_api_http:
+  enable_vrfs:
+    default: {}
+  enable_https: true
+loopback_interfaces:
+  Loopback0:
+    description: EVPN_Overlay_Peering
+    shutdown: false
+    ip_address: 192.168.90.1/32
+prefix_lists:
+  PL-LOOPBACKS-EVPN-OVERLAY:
+    sequence_numbers:
+      10:
+        action: permit 192.168.90.0/24 eq 32
+route_maps:
+  RM-CONN-2-BGP:
+    sequence_numbers:
+      10:
+        type: permit
+        match:
+        - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+router_bfd:
+  multihop:
+    interval: 300
+    min_rx: 300
+    multiplier: 3
+ethernet_interfaces:
+  Ethernet1:
+    peer: borderleaf1-DC1
+    peer_interface: Ethernet12
+    peer_type: l3leaf
+    description: P2P_LINK_TO_borderleaf1-DC1_Ethernet12
+    type: routed
+    shutdown: false
+    mtu: 1550
+    ip_address: 172.31.252.1/31
+  Ethernet2:
+    peer: borderleaf2-DC1
+    peer_interface: Ethernet12
+    peer_type: l3leaf
+    description: P2P_LINK_TO_borderleaf2-DC1_Ethernet12
+    type: routed
+    shutdown: false
+    mtu: 1550
+    ip_address: 172.31.252.3/31
+  Ethernet3:
+    peer: borderleaf1-DC2
+    peer_interface: Ethernet12
+    peer_type: l3leaf
+    description: P2P_LINK_TO_borderleaf1-DC2_Ethernet12
+    type: routed
+    shutdown: false
+    mtu: 1550
+    ip_address: 172.31.252.5/31
+  Ethernet4:
+    peer: borderleaf2-DC2
+    peer_interface: Ethernet12
+    peer_type: l3leaf
+    description: P2P_LINK_TO_borderleaf2-DC2_Ethernet12
+    type: routed
+    shutdown: false
+    mtu: 1550
+    ip_address: 172.31.252.7/31

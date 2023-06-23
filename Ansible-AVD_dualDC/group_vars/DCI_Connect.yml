@@ -1,0 +1,9 @@
+super_spine:
+  defaults:
+    bgp_as: 65000
+    loopback_ipv4_pool: 192.168.90.0/24
+    evpn_role: server
+  nodes:
+    DCI:
+      id: 1 # Must be unique in a DC
+      mgmt_ip: 192.168.0.76/24

@@ -1,0 +1,46 @@
+fabric_name: FABRIC
+p2p_uplinks_mtu: 1550
+
+
+dns_domain: atd.lab
+mgmt_interface: Management0
+mgmt_interface_vrf: default
+mgmt_gateway: 192.168.0.1
+
+local_users:
+  automator:
+    privilege: 15
+    role: network-admin
+    no_password: true
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQClbCIMYD4dzZpdmyHDsT7qyjx9uH4KdZcMRMbbAYhM4PvSnCC5/Hi0XPYesW+pyNldL21PkkS7pLPnBN01qGX7Bz8XxhM742+vRN2q07esxQRugGRaxSzS/jrS/6bwcFtKDsdh0GkSZ91r0qC8s5rktZjsnaaEq9FMZJI3jBNYXqV3uBaxnUQuM0+BFgfXoc+rfGeLpAjOdckqF/a3aTL4ReSlNmiXl5Qb1bAuE4h0GHGp4/KEDkEXaRoX1d4sVE2Y9+P1BM6fnMQFLIuCYVDvaUYNJVV/5hCAx48FsYRbZ3JqTi+8MxylYKUNF37e+ebEb5/J7RxU5tG234yk5Sht arista@level5berlin-1-fa2e7965"
+
+
+
+l3_edge:
+  p2p_links_ip_pools:
+    dci_evpn_gateway: 172.31.252.0/24
+  p2p_links:
+    - id: 1
+      ip_pool: dci_evpn_gateway
+      nodes: [borderleaf1-DC1, DCI]
+      interfaces: [Ethernet12, Ethernet1]
+      as: [65103, 65000]
+      include_in_underlay_protocol: true
+    - id: 2
+      ip_pool: dci_evpn_gateway
+      nodes: [borderleaf2-DC1, DCI]
+      interfaces: [Ethernet12, Ethernet2]
+      as: [65103, 65000]
+      include_in_underlay_protocol: true
+    - id: 3
+      ip_pool: dci_evpn_gateway
+      nodes: [borderleaf1-DC2, DCI]
+      interfaces: [Ethernet12, Ethernet3]
+      as: [65203, 65000]
+      include_in_underlay_protocol: true
+    - id: 4
+      ip_pool: dci_evpn_gateway
+      nodes: [borderleaf2-DC2, DCI]
+      interfaces: [Ethernet12, Ethernet4]
+      as: [65203, 65000]
+      include_in_underlay_protocol: true
